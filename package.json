@@ -1,0 +1,8 @@
+
+{
+  "name": "simple-web-app",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "echo Run your app manually"
+  }
+}
