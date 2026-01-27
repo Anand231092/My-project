@@ -2,6 +2,12 @@
 pipeline {
   agent any
 
+  pipeline {
+  agent { label 'linux' }
+  ...
+}
+
+
   triggers {
     // optional: periodic fallback
     pollSCM('H/5 * * * *')
