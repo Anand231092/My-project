@@ -1,45 +1,20 @@
-// Jenkinsfile (Declarative Pipeline)
 pipeline {
-  agent any
+    agent any
 
-  pipeline {
-  agent { label 'linux' }
-  ...
-}
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
 
-
-  triggers {
-    // optional: periodic fallback
-    pollSCM('H/5 * * * *')
-  }
-
-  stages {
-    stage('Checkout') {
-      steps {
-        // Uses the same SCM configuration as the job
-        checkout scm
-      }
+        stage('Deploy') {
+            steps {
+                sh '''
+                sudo rm -rf /usr/share/nginx/html/*
+                sudo cp -r * /usr/share/nginx/html/
+                '''
+            }
+        }
     }
-
-    stage('Build') {
-      steps {
-        sh 'echo "No build step for static site"'
-      }
-    }
-
-    stage('Deploy') {
-      steps {
-        sh '''
-          sudo rm -rf /usr/share/nginx/html/*
-          sudo cp -r * /usr/share/nginx/html/
-        '''
-      }
-    }
-  }
-
-  post {
-    always {
-      echo "Build finished."
-    }
-  }
 }
